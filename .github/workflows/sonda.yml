@@ -1,0 +1,19 @@
+name: sonda das rádios
+on:
+  schedule:
+    - cron: "7,22,37,52 * * * *"   # de 15 em 15 min, fora do minuto :00
+  workflow_dispatch:
+jobs:
+  ouvir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: ffmpeg
+        run: command -v ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+      - name: escutar as 3 rádios
+        env:
+          HC_MACEIO: ${{ secrets.HC_MACEIO }}
+          HC_DELMIRO: ${{ secrets.HC_DELMIRO }}
+          HC_GOSPEL: ${{ secrets.HC_GOSPEL }}
+        run: bash sonda.sh
