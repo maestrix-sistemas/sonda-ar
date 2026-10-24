@@ -17,3 +17,11 @@ jobs:
           HC_DELMIRO: ${{ secrets.HC_DELMIRO }}
           HC_GOSPEL: ${{ secrets.HC_GOSPEL }}
         run: bash sonda.sh
+      # VPS fora? Diz se é a Hostinger (23/10/2026) — ver vigia_vps.py
+      - name: vigia da VPS (causa provável no Telegram)
+        if: always()
+        env:
+          HC_API_KEY: ${{ secrets.HC_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python3 vigia_vps.py
